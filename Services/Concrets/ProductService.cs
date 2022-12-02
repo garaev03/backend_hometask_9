@@ -74,8 +74,7 @@ namespace task_13.Services.Concrets
             throw new NoneProductException();
 
         }
-
-
+  
         public void Update(int resId, int prodId)
         {
             RestoranService restoranService = new();

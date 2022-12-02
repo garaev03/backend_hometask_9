@@ -10,7 +10,6 @@ namespace task_13
             IProductService products = new ProductService();
             IRestoranService restorans = new RestoranService();
 
-
             restorans.Create("KFC");
             restorans.Create("Papa");
             restorans.Create("Moda");
@@ -25,7 +24,7 @@ namespace task_13
 
             Console.WriteLine();
 
-            products.Create("buggets", 12, 0, "MC");
+            products.Create("burger", 12, 0, "MC");
             products.Create("nuget", 20, 5, "MC");
             products.Create("free", 6, 0, "MC");
 
@@ -33,7 +32,6 @@ namespace task_13
             products.Remove(1,2);
             Console.WriteLine();
             products.GetAllinRestaurants(1);
-
 
         }
     }
