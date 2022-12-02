@@ -26,24 +26,21 @@ namespace task_13.Services.Concrets
 
         public void GetAll()
         {
-            Console.WriteLine("Restaurants:");
+            Console.WriteLine("\nRestaurants:");
             foreach (var restaurant in Restorans)
             {
                 Console.WriteLine($"ID: {restaurant.ID} -> Name: {restaurant.Name}");
             }
         }
 
-        public void GetById(int id)
+        public Restoran GetById(int id)
         {
             for (int i = 0; i < Restorans.Length; i++)
             {
                 if (Restorans[i].ID == id)
-                {
-                    Console.WriteLine(Restorans[i].Name);
-                    return;
-                }
+                    return Restorans[i];
             }
-            throw new InvalidInputException();
+            throw new NoneRestaurantException();
         }
 
         public void Remove(int id)
@@ -57,7 +54,7 @@ namespace task_13.Services.Concrets
                     return;
                 }
             }
-            throw new InvalidInputException();
+            throw new NoneRestaurantException();
         }
 
         public void Update(int id, string newName)
@@ -70,7 +67,7 @@ namespace task_13.Services.Concrets
                     return;
                 }
             }
-            throw new InvalidInputException();
+            throw new NoneRestaurantException();
         }
     }
 }

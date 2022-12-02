@@ -30,12 +30,9 @@ namespace task_13
             products.Create("free", 6, 0, "MC");
 
             products.GetByIdinRestaurant(1,1);
-            products.Update("MC", 1, "Nuggets");
-            products.GetByIdinRestaurant(1, 1);
-
-            products.Remove("MC",1);
+            products.Remove(1,2);
             Console.WriteLine();
-            products.GetAllinRestaurants("MC");
+            products.GetAllinRestaurants(1);
 
 
         }

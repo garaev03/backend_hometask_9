@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace task_13.Services.Utilities.Exceptions
 {
-    public class InvalidInputException:Exception
+    public class NoneProductException : Exception
     {
-        public InvalidInputException()
+        public NoneProductException()
         {
-            Console.WriteLine("Invalid input from User.");
+            Console.WriteLine("None product detected.");
         }
     }
 }

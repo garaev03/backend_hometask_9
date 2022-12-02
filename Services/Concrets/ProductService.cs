@@ -17,7 +17,7 @@ namespace task_13.Services.Concrets
             foreach (var restaurant in RestoranService.Restorans)
             {
                 if (restaurant.Name == resName)
-                {              
+                {
                     product.DiscountPrice = discountedPrice;
                     product.Price = DiscountCalc(discountedPrice, price);
                     product.Name = name;
@@ -28,84 +28,88 @@ namespace task_13.Services.Concrets
                     return;
                 }
             }
-            throw new InvalidInputException();
+            throw new NoneRestaurantException();
         }
 
-        public void GetAllinRestaurants(string resName)
+        public void GetAllinRestaurants(int resId)
         {
-            foreach (var restaurant in RestoranService.Restorans)
+            RestoranService restoranService = new();
+            var restoran = restoranService.GetById(resId);
+            Console.WriteLine($"Products in {restoran.Name}:\n");
+            for (int i = 0; i < restoran.products.Length; i++)
             {
-                if (restaurant.Name == resName)
-                {
-                    Console.WriteLine($"Products in {resName}:\n");
-                    for (int i = 0; i < restaurant.products.Length; i++)
-                    {
-                        Console.WriteLine($"Product Id: {restaurant.products[i].ID} \nName: {restaurant.products[i].Name} \nPrice: {restaurant.products[i].Price} \nDiscounted Price: {restaurant.products[i].DiscountPrice}\n");
-                    }
-                }
+                Console.WriteLine($"Product Id: {restoran.products[i].ID} \nName: {restoran.products[i].Name} \nPrice: {restoran.products[i].Price} \nDiscounted Price: {restoran.products[i].DiscountPrice}\n");
             }
         }
 
         public void GetByIdinRestaurant(int resId, int prodId)
         {
-            foreach (var restoran in RestoranService.Restorans)
+            RestoranService restoranService = new();
+            var restoran = restoranService.GetById(resId);
+            for (int i = 0; i < restoran.products.Length; i++)
             {
-                if (restoran.ID == resId)
+                if (restoran.products[i].ID == prodId)
                 {
-                    for (int i = 0; i < restoran.products.Length; i++)
-                    {
-                        if (restoran.products[i].ID == prodId)
-                        {
-                            Console.WriteLine($"Product name: {restoran.products[i].Name}");
-                            return;
-                        }
-                    }
+                    Console.WriteLine($"Product name: {restoran.products[i].Name}");
+                    return;
                 }
             }
-            throw new InvalidInputException();
+            throw new NoneProductException();
         }
 
-        public void Remove(string Name,int id)
+        public void Remove(int resId, int prodId)
         {
-            foreach (var restoran in RestoranService.Restorans)
+            RestoranService restoranService = new();
+            var restoran = restoranService.GetById(resId);
+            for (int i = 0; i < restoran.products.Length; i++)
             {
-                if (restoran.Name == Name)
+                if (prodId == restoran.products[i].ID)
                 {
-                    for (int i = 0; i < restoran.products.Length; i++)
-                    {
-                        if (restoran.products[i].ID == id)
-                        {
-                            var clip = restoran.products[restoran.products.Length-1];
-                            restoran.products[i] = clip;
-                            Array.Resize(ref restoran.products, restoran.products.Length - 1);
-                            return;
-                        }
-                    }
+                    var clip = restoran.products[restoran.products.Length - 1];
+                    restoran.products[i] = clip;
+                    Array.Resize(ref restoran.products, restoran.products.Length - 1);
+                    return;
                 }
             }
-            throw new InvalidInputException();
+            throw new NoneProductException();
+
         }
 
-        public void Update(string resName, int id, string newProdName)
+
+        public void Update(int resId, int prodId)
         {
-            foreach (var restaurant in RestoranService.Restorans)
+            RestoranService restoranService = new();
+            var arr = restoranService.GetById(resId).products;
+            foreach (var product in arr)
             {
-                if (restaurant.Name == resName)
+                if (product.ID == prodId)
                 {
-                    for (int i = 0; i < restaurant.products.Length; i++)
+                    Console.WriteLine($"\nSelected Product: {product.Name}");
+                    Console.WriteLine("What do you want to change?\n1. Product Name\n2. Product Price\n3. Product Discount Price\n");
+                    Console.Write("Enter key:"); int value = int.Parse(Console.ReadLine());
+                    switch (value)
                     {
-                        if (restaurant.products[i].ID == id)
-                        {
-                            restaurant.products[i].Name = newProdName;
+                        case 1:
+                            Console.WriteLine("--Selected Product Name change--");
+                            Console.Write("Enter new Name: "); product.Name = Console.ReadLine();
                             return;
-                        }
+                        case 2:
+                            Console.WriteLine("--Selected Product Price change--");
+                            Console.Write("Enter new Price: "); product.Price = Convert.ToDouble(Console.ReadLine());
+                            return;
+                        case 3:
+                            Console.WriteLine("--Selected Product Discount Price change--");
+                            Console.WriteLine("Enter new Discount Price: "); product.DiscountPrice = Convert.ToDouble(Console.ReadLine());
+                            return;
+                        default:
+                            return;
                     }
                 }
             }
-            throw new InvalidInputException();
+            throw new NoneProductException();
         }
 
-        public double DiscountCalc(double discount,double price)
-                =>price-(price*discount)/100;
+        public double DiscountCalc(double discount, double price)
+                => price - (price * discount) / 100;
     }
 }

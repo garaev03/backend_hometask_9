@@ -13,7 +13,7 @@ namespace task_13.Services.Abstraction
         public void Remove(int id);
         public void Update(int id, string newName);
         public void GetAll();
-        public void GetById(int id);
+        public Restoran GetById(int id);
 
     }
 }

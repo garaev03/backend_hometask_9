@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace task_13.Services.Utilities.Exceptions
 {
-    public class NoneProductsException:Exception
+    public class NoneRestaurantException:Exception
     {
-        public NoneProductsException()
+        public NoneRestaurantException()
         {
-            Console.WriteLine("There is no product in restaurant.");
+            Console.WriteLine("None restaurant detected.");
         }
     }
 }
